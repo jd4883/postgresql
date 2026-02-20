@@ -1,0 +1,21 @@
+# PostgreSQL 3-node cluster (CloudNativePG). Deploy in namespace postgresql.
+# Credentials from 1Password via External Secrets. Database hostname for apps: postgresql-rw.postgresql.svc.cluster.local
+# See README for 1Password item and creating databases/users (nextcloud, immich, etc.).
+
+clusterName: postgresql
+instances: 3
+# Use Longhorn; pre-stage capacity via homelab/helm/longhorn values/volumes.yaml or dynamic provisioning.
+storageSize: 25Gi
+storageClass: longhorn
+
+# Superuser (postgres) password from 1Password. Create item e.g. "postgresql" with property "password".
+externalSecrets:
+  enabled: true
+  superuser:
+    secretName: postgresql-superuser
+    refreshInterval: 1h
+    secretStoreRef:
+      name: onepassword-connect
+      kind: ClusterSecretStore
+    itemTitle: postgresql
+    passwordProperty: password
