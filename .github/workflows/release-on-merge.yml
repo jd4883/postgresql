@@ -1,0 +1,58 @@
+# Auto-release on merge to main: bump patch version, create tag and release.
+# One repo, two charts (operator/, cluster/). Trigger on any chart or README change.
+# Uses reusable action from github-actions repo. Requires: default branch is main; tags exist as v* (e.g. v0.1.0).
+# Do NOT include .github/** so workflow-only changes do not trigger a release.
+
+name: Release on merge to main
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'README.md'
+      - 'operator/Chart.yaml'
+      - 'operator/Chart.lock'
+      - 'operator/values.yaml'
+      - 'operator/templates/**'
+      - 'cluster/Chart.yaml'
+      - 'cluster/Chart.lock'
+      - 'cluster/values.yaml'
+      - 'cluster/templates/**'
+
+concurrency: release-on-merge
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: "v3.14.0"
+      - name: Lint operator chart
+        run: |
+          cd operator
+          helm repo add cloudnative-pg https://cloudnative-pg.github.io/charts
+          helm dependency update .
+          helm lint .
+      - name: Lint cluster chart
+        run: |
+          cd cluster
+          helm dependency update .
+          helm lint .
+
+  release:
+    runs-on: ubuntu-latest
+    needs: lint
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Release on merge (create tag and release)
+        uses: expectedbehaviors/github-actions/.github/actions/release-on-merge@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
