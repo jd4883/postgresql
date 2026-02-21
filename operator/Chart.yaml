@@ -1,0 +1,19 @@
+apiVersion: v2
+name: postgresql-operator
+description: CloudNativePG operator — install in cluster-tools for homelab. Manages PostgreSQL clusters via CRDs.
+type: application
+version: 0.1.0
+appVersion: "1.24.0"
+kubeVersion: ">=1.22.0-0"
+keywords:
+  - postgresql
+  - cloudnative-pg
+  - cluster-tools
+home: https://cloudnative-pg.io
+sources:
+  - https://github.com/cloudnative-pg/charts
+  - https://github.com/cloudnative-pg/cloudnative-pg
+dependencies:
+  - name: cloudnative-pg
+    version: "0.22.2"
+    repository: https://cloudnative-pg.github.io/charts

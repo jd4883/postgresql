@@ -1,0 +1,6 @@
+# CloudNativePG operator — install in cluster-tools namespace. See README.
+# The instance (3-node cluster) is deployed by the postgresql chart in this repo (cluster/).
+
+cloudnative-pg:
+  # Install operator in cluster-tools so it can manage Cluster CRs in any namespace (e.g. postgresql).
+  namespaceOverride: cluster-tools

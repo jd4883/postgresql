@@ -1,0 +1,13 @@
+apiVersion: v2
+name: postgresql
+description: CloudNativePG 3-node PostgreSQL cluster in namespace postgresql; credentials from 1Password via External Secrets.
+type: application
+version: 0.1.0
+appVersion: "16"
+kubeVersion: ">=1.22.0-0"
+keywords:
+  - postgresql
+  - cloudnative-pg
+home: https://cloudnative-pg.io
+sources:
+  - https://github.com/cloudnative-pg/cloudnative-pg
