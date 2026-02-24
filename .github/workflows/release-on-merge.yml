@@ -1,5 +1,5 @@
 # Auto-release on merge to main: bump patch version, create tag and release.
-# One repo, two charts (operator/, cluster/). Trigger on any chart or README change.
+# One repo, three charts (operator/, cluster/, backup-to-minio/). Trigger on any chart or README change.
 # Uses reusable action from github-actions repo. Requires: default branch is main; tags exist as v* (e.g. v0.1.0).
 # Do NOT include .github/** so workflow-only changes do not trigger a release.
 
@@ -41,6 +41,8 @@ jobs:
           cd cluster
           helm dependency update .
           helm lint .
+      - name: Lint backup-to-minio chart
+        run: helm lint backup-to-minio
 
   release:
     runs-on: ubuntu-latest
