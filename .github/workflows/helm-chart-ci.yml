@@ -1,0 +1,46 @@
+name: Helm chart CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Chart.yaml'
+      - 'values.yaml'
+      - 'values/**'
+      - 'README.md'
+      - '.helmignore'
+      - 'templates/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Chart.yaml'
+      - 'values.yaml'
+      - 'values/**'
+      - 'README.md'
+      - '.helmignore'
+      - 'templates/**'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release tag override (e.g. postgresql-v1.0.0)'
+        required: false
+
+concurrency: helm-chart-postgresql
+
+jobs:
+  ci:
+    permissions:
+      contents: write
+      pull-requests: read
+    uses: expectedbehaviors/github-actions/.github/workflows/helm-chart-ci.yml@main
+    secrets: inherit
+    with:
+      chart_path: .
+      tag_prefix: postgresql-v
+      helm_repositories: |
+        cloudnative-pg=https://cloudnative-pg.github.io/charts
+      publish_enabled: false
+      release_notes_enabled: true
+      release_tag: ${{ github.event.inputs.release_tag || '' }}
