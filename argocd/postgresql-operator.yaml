@@ -1,5 +1,9 @@
 chart: postgresql-operator
 project: cluster-tools
+namespaceLabels:
+  pod-security.kubernetes.io/audit: privileged
+  pod-security.kubernetes.io/enforce: privileged
+  pod-security.kubernetes.io/warn: privileged
 path: operator
 targetRevision: HEAD
 gitValueFiles:
