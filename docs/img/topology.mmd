@@ -1,0 +1,10 @@
+flowchart LR
+  classDef ext fill:#eef4ff,stroke:#5b8def,color:#12233f;
+  classDef app fill:#e9f7ef,stroke:#3fa06a,color:#0f2d1e;
+  classDef store fill:#fff4e5,stroke:#e0932f,color:#3d2a08;
+  classDef sec fill:#fdecef,stroke:#d2506b,color:#3d0d18;
+  classDef dep fill:#f3edff,stroke:#8a63d2,color:#241338;
+  subgraph NS["namespace: cluster-tools"]
+    direction TB
+    APP["postgresql<br/>chart 0.1.0"]:::app
+  end

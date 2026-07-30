@@ -10,6 +10,12 @@ One repo, **three Helm charts** for PostgreSQL on Kubernetes:
 
 ---
 
+## 🗺️ Topology
+
+![postgresql topology](docs/img/topology.svg)
+
+<sub>Generated from this repo’s `values.yaml`, `Chart.yaml` and `argocd/` manifests. Source: [`docs/img/topology.mmd`](docs/img/topology.mmd). Deployed by Argo CD into namespace `cluster-tools`.</sub>
+
 ## Install order
 
 1. **operator:** `helm install postgresql-operator ./operator -n cluster-tools -f operator/values.yaml`
