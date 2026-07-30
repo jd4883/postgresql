@@ -4,21 +4,21 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Chart.yaml'
-      - 'values.yaml'
-      - 'values/**'
+      - 'operator/**'
+      - 'cluster/**'
+      - 'backup-to-minio/**'
+      - 'argocd/**'
       - 'README.md'
       - '.helmignore'
-      - 'templates/**'
   pull_request:
     branches: [main]
     paths:
-      - 'Chart.yaml'
-      - 'values.yaml'
-      - 'values/**'
+      - 'operator/**'
+      - 'cluster/**'
+      - 'backup-to-minio/**'
+      - 'argocd/**'
       - 'README.md'
       - '.helmignore'
-      - 'templates/**'
   release:
     types: [published]
   workflow_dispatch:
@@ -37,7 +37,10 @@ jobs:
     uses: expectedbehaviors/github-actions/.github/workflows/helm-chart-ci.yml@main
     secrets: inherit
     with:
-      chart_path: .
+      chart_paths: |
+        operator
+        cluster
+        backup-to-minio
       tag_prefix: postgresql-v
       helm_repositories: |
         cloudnative-pg=https://cloudnative-pg.github.io/charts
